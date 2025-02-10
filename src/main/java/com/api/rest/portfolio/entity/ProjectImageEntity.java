@@ -1,12 +1,10 @@
 package com.api.rest.portfolio.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,7 +13,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +23,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "projects")
+@Table(name = "project_images")
 @Builder
-public class ProjectEntity {
+public class ProjectImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,16 +34,6 @@ public class ProjectEntity {
     private String name;
 
     private String imageUrl;
-
-    private String url;
-
-    private String description;
-
-    private String hashtag;
-
-    private Boolean isPublished;
-
-    private Boolean isOpen;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
@@ -57,10 +44,7 @@ public class ProjectEntity {
     private Date updatedAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
-    private UserEntity userEntity;
-
-    @OneToMany(mappedBy = "projectEntity", cascade = CascadeType.ALL)
-    private List<ProjectImageEntity> projectImages;
+    @JoinColumn(name = "project_id", nullable = false, referencedColumnName = "id")
+    private ProjectEntity projectEntity;
 
 }
