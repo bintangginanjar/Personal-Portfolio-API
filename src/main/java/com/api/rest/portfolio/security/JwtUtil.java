@@ -31,7 +31,7 @@ public class JwtUtil {
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         Date currDate = new Date();
-        Date expDate = new Date(currDate.getTime() + SecurityConstants.JWTexpiration);
+        Date expDate = new Date(System.currentTimeMillis() + SecurityConstants.JWTexpiration);
 
         String token = Jwts.builder()
                         .setSubject(username)
