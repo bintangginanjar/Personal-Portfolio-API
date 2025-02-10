@@ -3,10 +3,17 @@ package com.api.rest.portfolio.security;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.api.rest.portfolio.entity.UserEntity;
+import com.api.rest.portfolio.repository.UserRepository;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,6 +24,9 @@ import jakarta.servlet.http.HttpServletRequest;
 public class JwtUtil {
 
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
+    @Autowired
+    private UserRepository userRepository;
 
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
@@ -65,5 +75,17 @@ public class JwtUtil {
 
         return null;
     }    
+
+    public Boolean isTokenExpired(String token) {
+        UserEntity user = userRepository.findFirstByToken(token)
+                                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized access")
+        );
+
+        if (user.getTokenExpiredAt() < System.currentTimeMillis()) {
+            return true;
+        }
+
+        return false;
+    }
 
 }
