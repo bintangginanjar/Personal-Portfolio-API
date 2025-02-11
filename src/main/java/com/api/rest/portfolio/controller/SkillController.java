@@ -36,7 +36,7 @@ public class SkillController {
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<SkillResponse> get(Authentication authentication, 
+    public WebResponse<SkillResponse> create(Authentication authentication, 
                                             @RequestBody RegisterSkillRequest request) {
         SkillResponse response = skillService.create(authentication, request);
 
@@ -85,7 +85,7 @@ public class SkillController {
         path = "/api/users/skills/{skillId}",        
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<String> update(Authentication authentication,                                                
+    public WebResponse<String> delete(Authentication authentication,                                                
                                         @PathVariable("skillId") String skillId) {
 
         skillService.delete(authentication, skillId);
