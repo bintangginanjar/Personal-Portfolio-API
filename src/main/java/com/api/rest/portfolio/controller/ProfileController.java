@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.rest.portfolio.model.ProfileResponse;
@@ -27,7 +28,24 @@ public class ProfileController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(
-        path = "/api/profiles",        
+        path = "/api/users/profiles",
+        consumes = MediaType.APPLICATION_JSON_VALUE,   
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<ProfileResponse> create(Authentication authentication, 
+                                            @RequestBody RegisterProfileRequest request) {
+        ProfileResponse response = profileService.create(authentication, request);
+
+        return WebResponse.<ProfileResponse>builder()
+                                        .status(true)
+                                        .messages("Profile register success")
+                                        .data(response)
+                                        .build();      
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping(
+        path = "/api/users/profiles",        
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<ProfileResponse> get(Authentication authentication) {
@@ -41,26 +59,12 @@ public class ProfileController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping(
-        path = "/api/profiles",        
-        produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public WebResponse<ProfileResponse> create(Authentication authentication, RegisterProfileRequest request) {
-        ProfileResponse response = profileService.create(authentication, request);
-
-        return WebResponse.<ProfileResponse>builder()
-                                        .status(true)
-                                        .messages("Profile registration success")
-                                        .data(response)
-                                        .build();      
-    }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping(
-        path = "/api/profiles",        
+        path = "/api/users/profiles",
+        consumes = MediaType.APPLICATION_JSON_VALUE,        
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<ProfileResponse> update(Authentication authentication, UpdateProfileRequest request) {
+    public WebResponse<ProfileResponse> update(Authentication authentication, @RequestBody UpdateProfileRequest request) {
         ProfileResponse response = profileService.update(authentication, request);
 
         return WebResponse.<ProfileResponse>builder()
