@@ -86,8 +86,8 @@ public class SkillController {
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<String> update(Authentication authentication,                                                
-                                                @PathVariable("skillId") String skillId) {
-                                                    
+                                        @PathVariable("skillId") String skillId) {
+
         skillService.delete(authentication, skillId);
 
         return WebResponse.<String>builder()
