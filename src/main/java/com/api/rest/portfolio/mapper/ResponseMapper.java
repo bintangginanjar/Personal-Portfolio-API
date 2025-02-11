@@ -3,8 +3,10 @@ package com.api.rest.portfolio.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.api.rest.portfolio.entity.ProfileEntity;
 import com.api.rest.portfolio.entity.RoleEntity;
 import com.api.rest.portfolio.entity.UserEntity;
+import com.api.rest.portfolio.model.ProfileResponse;
 import com.api.rest.portfolio.model.RoleResponse;
 import com.api.rest.portfolio.model.UserResponse;
 
@@ -24,5 +26,13 @@ public class ResponseMapper {
                         p -> new RoleResponse(
                             p.getName()
                         )).collect(Collectors.toList());
+    }
+
+    public static ProfileResponse ToProfileResponseMapper(ProfileEntity profile) {
+        return ProfileResponse.builder()
+                .firstname(profile.getFirstname())
+                .lastname(profile.getLastname())
+                .about(profile.getAbout())
+                .build();
     }
 }
