@@ -5,9 +5,11 @@ import java.util.stream.Collectors;
 
 import com.api.rest.portfolio.entity.ProfileEntity;
 import com.api.rest.portfolio.entity.RoleEntity;
+import com.api.rest.portfolio.entity.SkillEntity;
 import com.api.rest.portfolio.entity.UserEntity;
 import com.api.rest.portfolio.model.ProfileResponse;
 import com.api.rest.portfolio.model.RoleResponse;
+import com.api.rest.portfolio.model.SkillResponse;
 import com.api.rest.portfolio.model.UserResponse;
 
 public class ResponseMapper {
@@ -34,5 +36,25 @@ public class ResponseMapper {
                 .lastname(profile.getLastname())
                 .about(profile.getAbout())
                 .build();
+    }
+
+    public static SkillResponse ToSkillResponseMapper(SkillEntity skill) {
+        return SkillResponse.builder()
+                .id(skill.getId())
+                .name(skill.getName())
+                .imageUrl(skill.getImageUrl())
+                .isPublished(skill.getIsPublished())
+                .build();
+    }
+
+    public static List<SkillResponse> ToSkillResponseListMapper(List<SkillEntity> skills) {
+        return skills.stream()
+                        .map(
+                            p -> new SkillResponse(
+                                p.getId(),
+                                p.getName(),
+                                p.getImageUrl(),
+                                p.getIsPublished()
+                            )).collect(Collectors.toList());
     }
 }

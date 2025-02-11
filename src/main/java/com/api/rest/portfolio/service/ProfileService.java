@@ -39,10 +39,14 @@ public class ProfileService {
     public ProfileResponse create(Authentication authentication, RegisterProfileRequest request) {
         validationService.validate(request);            
 
+        UserEntity user = userRepository.findByUsername(authentication.getName())
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));                    
+
         ProfileEntity profile = new ProfileEntity();
         profile.setFirstname(request.getFirstname());
         profile.setLastname(request.getLastname());
         profile.setAbout(request.getAbout());
+        profile.setUserEntity(user);
         profileRepository.save(profile);
 
         return ResponseMapper.ToProfileResponseMapper(profile);
