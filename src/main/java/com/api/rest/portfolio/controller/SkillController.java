@@ -1,7 +1,5 @@
 package com.api.rest.portfolio.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,13 +48,13 @@ public class SkillController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(
-        path = "/api/users/skills",        
+        path = "/api/users/skills/{skillId}",        
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<List<SkillResponse>> get(Authentication authentication) {
-        List<SkillResponse> response = skillService.get(authentication);
+    public WebResponse<SkillResponse> get(Authentication authentication, @PathVariable("skillId") String skillId) {
+        SkillResponse response = skillService.get(authentication, skillId);
 
-        return WebResponse.<List<SkillResponse>>builder()
+        return WebResponse.<SkillResponse>builder()
                                         .status(true)
                                         .messages("Skill fetching success")
                                         .data(response)
@@ -72,6 +70,9 @@ public class SkillController {
     public WebResponse<SkillResponse> update(Authentication authentication,
                                                 @RequestBody UpdateSkillRequest request,
                                                 @PathVariable("skillId") String skillId) {
+
+        request.setId(skillId);
+
         SkillResponse response = skillService.update(authentication, request, skillId);
 
         return WebResponse.<SkillResponse>builder()

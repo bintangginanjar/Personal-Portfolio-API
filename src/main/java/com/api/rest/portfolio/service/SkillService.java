@@ -62,8 +62,27 @@ public class SkillService {
     }
 
     @Transactional(readOnly = true)
-    public List<SkillResponse> get(Authentication authentication) {
+    public SkillResponse get(Authentication authentication, String strSkillId) {
+        Integer skillId = 0;
 
+        try {
+            skillId = Integer.parseInt(strSkillId);       
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request");
+        }
+
+        UserEntity user = userRepository.findByUsername(authentication.getName())
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        //List<SkillEntity> skills = skillRepository.findAllByUserEntity(user);
+        SkillEntity skill = skillRepository.findFirstByUserEntityAndId(user, skillId)
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Skill not found"));
+
+        return ResponseMapper.ToSkillResponseMapper(skill);
+    }    
+
+    @Transactional
+    public List<SkillResponse> list(Authentication authentication) {
         UserEntity user = userRepository.findByUsername(authentication.getName())
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
@@ -95,11 +114,11 @@ public class SkillService {
         if (Objects.nonNull(request.getImageUrl())) {
             skill.setImageUrl(request.getImageUrl());
         }
-        /*
+        
         if (Objects.nonNull(request.getIsPublished())) {
             skill.setIsPublished(request.getIsPublished());
         }
-        */
+        
         skillRepository.save(skill);
 
         return ResponseMapper.ToSkillResponseMapper(skill);

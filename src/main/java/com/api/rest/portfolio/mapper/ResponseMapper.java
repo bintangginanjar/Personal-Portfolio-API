@@ -43,7 +43,7 @@ public class ResponseMapper {
                 .id(skill.getId())
                 .name(skill.getName())
                 .imageUrl(skill.getImageUrl())
-                //.isPublished(skill.getIsPublished())
+                .isPublished(skill.getIsPublished())
                 .build();
     }
 
