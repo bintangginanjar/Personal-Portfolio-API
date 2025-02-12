@@ -67,7 +67,7 @@ public class SkillControllerTest {
 
     private final String name = "coding";
     private final String imageUrl = "https://cdn-icons-png.flaticon.com/512/4191/4191039.png";
-    //private final boolean isPublished = true;
+    private final boolean published = true;
 
     @BeforeEach
     void setUp() {                
@@ -91,7 +91,7 @@ public class SkillControllerTest {
         RegisterSkillRequest request = new RegisterSkillRequest();
         request.setName(name);
         request.setImageUrl(imageUrl);
-        //request.setIsPublished(isPublished);
+        request.setIsPublished(published);
 
         Authentication authentication = authenticationManager.authenticate(
                                             new UsernamePasswordAuthenticationToken(

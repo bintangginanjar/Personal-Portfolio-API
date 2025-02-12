@@ -51,9 +51,12 @@ public class SkillService {
         SkillEntity skill = new SkillEntity();
         skill.setName(request.getName());
         skill.setImageUrl(request.getImageUrl());
-        skill.setIsPublished(true);
+        //skill.setIsPublished(true);
+        skill.setIsPublished(request.getIsPublished());
         skill.setUserEntity(user);
         skillRepository.save(skill);
+
+        log.info("isPublished value : ", skill.getIsPublished());
 
         return ResponseMapper.ToSkillResponseMapper(skill);
     }
