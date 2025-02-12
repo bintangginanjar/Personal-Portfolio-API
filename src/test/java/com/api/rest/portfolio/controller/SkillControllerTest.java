@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -1000,6 +1001,159 @@ public class SkillControllerTest {
                 status().isForbidden()
         ).andDo(result -> {
                 WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+
+            assertEquals(false, response.getStatus());            
+        });
+    }
+
+    @Test
+    void testGetSkillListSuccess() throws Exception {
+        UserEntity user = userRepository.findByUsername(username).orElse(null);
+
+        SkillEntity skill = new SkillEntity();
+        skill.setName(name);
+        skill.setImageUrl(imageUrl);        
+        skill.setIsPublished(published);
+        skill.setUserEntity(user);
+        skillRepository.save(skill);
+
+        Authentication authentication = authenticationManager.authenticate(
+                                            new UsernamePasswordAuthenticationToken(
+                                                username, password)
+                                            );
+
+        String mockToken = jwtUtil.generateToken(authentication);
+
+        user.setToken(mockToken);
+        user.setTokenExpiredAt(System.currentTimeMillis() + SecurityConstants.JWTexpiration);
+        userRepository.save(user);
+
+        String mockBearerToken = "Bearer " + mockToken;
+
+        mockMvc.perform(
+                get("/api/users/skills/list")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)                        
+                        .header("Authorization", mockBearerToken)                        
+        ).andExpectAll(
+                status().isOk()
+        ).andDo(result -> {
+                WebResponse<List<SkillResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+
+            assertEquals(true, response.getStatus());            
+        });
+    }
+
+    @Test
+    void testGetSkillListInvalidToken() throws Exception {
+        UserEntity user = userRepository.findByUsername(username).orElse(null);
+
+        SkillEntity skill = new SkillEntity();
+        skill.setName(name);
+        skill.setImageUrl(imageUrl);        
+        skill.setIsPublished(published);
+        skill.setUserEntity(user);
+        skillRepository.save(skill);
+
+        Authentication authentication = authenticationManager.authenticate(
+                                            new UsernamePasswordAuthenticationToken(
+                                                username, password)
+                                            );
+
+        String mockToken = jwtUtil.generateToken(authentication);
+
+        user.setToken(mockToken);
+        user.setTokenExpiredAt(System.currentTimeMillis() + SecurityConstants.JWTexpiration);
+        userRepository.save(user);
+
+        String mockBearerToken = "Bearer " + mockToken + "a";
+
+        mockMvc.perform(
+                get("/api/users/skills/list")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)                        
+                        .header("Authorization", mockBearerToken)                        
+        ).andExpectAll(
+                status().isUnauthorized()
+        ).andDo(result -> {
+                WebResponse<List<SkillResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+
+            assertEquals(false, response.getStatus());            
+        });
+    }
+
+    @Test
+    void testGetSkillListTokenExpired() throws Exception {
+        UserEntity user = userRepository.findByUsername(username).orElse(null);
+
+        SkillEntity skill = new SkillEntity();
+        skill.setName(name);
+        skill.setImageUrl(imageUrl);        
+        skill.setIsPublished(published);
+        skill.setUserEntity(user);
+        skillRepository.save(skill);
+
+        Authentication authentication = authenticationManager.authenticate(
+                                            new UsernamePasswordAuthenticationToken(
+                                                username, password)
+                                            );
+
+        String mockToken = jwtUtil.generateToken(authentication);
+
+        user.setToken(mockToken);
+        user.setTokenExpiredAt(System.currentTimeMillis() - SecurityConstants.JWTexpiration);
+        userRepository.save(user);
+
+        String mockBearerToken = "Bearer " + mockToken;
+
+        mockMvc.perform(
+                get("/api/users/skills/list")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)                        
+                        .header("Authorization", mockBearerToken)                        
+        ).andExpectAll(
+                status().isForbidden()
+        ).andDo(result -> {
+                WebResponse<List<SkillResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+
+            assertEquals(false, response.getStatus());            
+        });
+    }
+
+    @Test
+    void testGetSkillListNoToken() throws Exception {
+        UserEntity user = userRepository.findByUsername(username).orElse(null);
+
+        SkillEntity skill = new SkillEntity();
+        skill.setName(name);
+        skill.setImageUrl(imageUrl);        
+        skill.setIsPublished(published);
+        skill.setUserEntity(user);
+        skillRepository.save(skill);
+
+        Authentication authentication = authenticationManager.authenticate(
+                                            new UsernamePasswordAuthenticationToken(
+                                                username, password)
+                                            );
+
+        String mockToken = jwtUtil.generateToken(authentication);
+
+        user.setToken(mockToken);
+        user.setTokenExpiredAt(System.currentTimeMillis() - SecurityConstants.JWTexpiration);
+        userRepository.save(user);        
+
+        mockMvc.perform(
+                get("/api/users/skills/list")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)                                                                     
+        ).andExpectAll(
+                status().isForbidden()
+        ).andDo(result -> {
+                WebResponse<List<SkillResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
             });
 
             assertEquals(false, response.getStatus());            

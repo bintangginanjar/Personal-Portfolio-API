@@ -1,5 +1,7 @@
 package com.api.rest.portfolio.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -95,6 +97,21 @@ public class SkillController {
         return WebResponse.<String>builder()
                                         .status(true)
                                         .messages("Skill delete success")                                        
+                                        .build();      
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping(
+        path = "/api/users/skills/list",        
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<List<SkillResponse>> list(Authentication authentication) {
+        List<SkillResponse> response = skillService.list(authentication);
+
+        return WebResponse.<List<SkillResponse>>builder()
+                                        .status(true)
+                                        .messages("Skill fetching success")
+                                        .data(response)
                                         .build();      
     }
 }
