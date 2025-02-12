@@ -5,7 +5,10 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.api.rest.portfolio.converter.BooleanConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +40,7 @@ public class ServiceEntity {
 
     private String description;
 
+    @Convert(converter = BooleanConverter.class)
     private Boolean isPublished;
 
     @CreationTimestamp
