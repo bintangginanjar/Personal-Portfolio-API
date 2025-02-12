@@ -36,13 +36,14 @@ public class SkillController {
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<SkillResponse> create(Authentication authentication, 
+    public WebResponse<SkillResponse> register(Authentication authentication, 
                                             @RequestBody RegisterSkillRequest request) {
+
         SkillResponse response = skillService.create(authentication, request);
 
         return WebResponse.<SkillResponse>builder()
                                         .status(true)
-                                        .messages("Skill register success")
+                                        .messages("Skill registration success")
                                         .data(response)
                                         .build();      
     }

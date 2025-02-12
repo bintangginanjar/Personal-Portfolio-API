@@ -31,8 +31,9 @@ public class RoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, length = 64, nullable = false)
-    private String name;
+    @Builder.Default
+    @Column(unique = true, length = 64, nullable = false)    
+    private String name = "ROLE_ADMIN";
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

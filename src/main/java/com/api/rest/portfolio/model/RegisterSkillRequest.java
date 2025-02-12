@@ -17,8 +17,5 @@ public class RegisterSkillRequest {
 
     @NotBlank
     private String imageUrl;
-
-    @NotBlank
-    private Boolean isPublished;
-
+    
 }

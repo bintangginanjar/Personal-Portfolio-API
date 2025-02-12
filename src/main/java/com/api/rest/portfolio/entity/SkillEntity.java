@@ -35,6 +35,7 @@ public class SkillEntity {
 
     private String imageUrl;
 
+    @Column(nullable = false, columnDefinition = "BOOLEAN")        
     private Boolean isPublished;
 
     @CreationTimestamp
@@ -49,4 +50,14 @@ public class SkillEntity {
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
     private UserEntity userEntity;
 
+    /*
+    public boolean getIsPublished() {
+        return isPublished;
+    }
+
+    public void setIsPublished(boolean isPublished) {
+        this.isPublished = isPublished;
+    }
+    */    
+    
 }

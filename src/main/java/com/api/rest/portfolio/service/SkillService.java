@@ -19,7 +19,10 @@ import com.api.rest.portfolio.model.UpdateSkillRequest;
 import com.api.rest.portfolio.repository.SkillRepository;
 import com.api.rest.portfolio.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class SkillService {
 
     @Autowired
@@ -43,17 +46,16 @@ public class SkillService {
         validationService.validate(request);            
 
         UserEntity user = userRepository.findByUsername(authentication.getName())
-                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));                    
 
         SkillEntity skill = new SkillEntity();
         skill.setName(request.getName());
         skill.setImageUrl(request.getImageUrl());
-        skill.setIsPublished(request.getIsPublished());
+        skill.setIsPublished(true);
         skill.setUserEntity(user);
         skillRepository.save(skill);
 
         return ResponseMapper.ToSkillResponseMapper(skill);
-
     }
 
     @Transactional(readOnly = true)
@@ -90,11 +92,11 @@ public class SkillService {
         if (Objects.nonNull(request.getImageUrl())) {
             skill.setImageUrl(request.getImageUrl());
         }
-
+        /*
         if (Objects.nonNull(request.getIsPublished())) {
             skill.setIsPublished(request.getIsPublished());
         }
-
+        */
         skillRepository.save(skill);
 
         return ResponseMapper.ToSkillResponseMapper(skill);

@@ -675,4 +675,5 @@ public class ProfileControllerTest {
             assertEquals(false, response.getStatus());            
         });
     }
+    
 }
