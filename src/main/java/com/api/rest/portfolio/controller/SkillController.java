@@ -58,7 +58,7 @@ public class SkillController {
 
         return WebResponse.<List<SkillResponse>>builder()
                                         .status(true)
-                                        .messages("Skill register success")
+                                        .messages("Skill fetching success")
                                         .data(response)
                                         .build();      
     }
@@ -76,7 +76,7 @@ public class SkillController {
 
         return WebResponse.<SkillResponse>builder()
                                         .status(true)
-                                        .messages("Skill register success")
+                                        .messages("Skill update success")
                                         .data(response)
                                         .build();      
     }
@@ -93,7 +93,7 @@ public class SkillController {
 
         return WebResponse.<String>builder()
                                         .status(true)
-                                        .messages("Skill register success")                                        
+                                        .messages("Skill delete success")                                        
                                         .build();      
     }
 }
