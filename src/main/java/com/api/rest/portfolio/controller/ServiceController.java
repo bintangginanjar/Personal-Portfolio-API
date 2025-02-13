@@ -67,11 +67,11 @@ public class ServiceController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping(
-        path = "/api/users/services",        
+        path = "/api/users/services/{serviceId}",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<ServiceResponse> register(Authentication authentication, 
+    public WebResponse<ServiceResponse> update(Authentication authentication, 
                                             @RequestBody UpdateServiceRequest request,
                                             @PathVariable("serviceId") String serviceId) {
 
@@ -102,7 +102,7 @@ public class ServiceController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(
-        path = "/api/users/services/{serviceId}",                
+        path = "/api/users/services/list",                
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<List<ServiceResponse>> list(Authentication authentication) {

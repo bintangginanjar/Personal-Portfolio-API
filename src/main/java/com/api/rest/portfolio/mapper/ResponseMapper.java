@@ -62,6 +62,7 @@ public class ResponseMapper {
 
     public static ServiceResponse ToServiceResponseMapper(ServiceEntity service) {
         return ServiceResponse.builder()
+                .id(service.getId())
                 .name(service.getName())
                 .imageUrl(service.getImageUrl())
                 .description(service.getDescription())
