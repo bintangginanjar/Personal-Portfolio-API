@@ -5,10 +5,12 @@ import java.util.stream.Collectors;
 
 import com.api.rest.portfolio.entity.ProfileEntity;
 import com.api.rest.portfolio.entity.RoleEntity;
+import com.api.rest.portfolio.entity.ServiceEntity;
 import com.api.rest.portfolio.entity.SkillEntity;
 import com.api.rest.portfolio.entity.UserEntity;
 import com.api.rest.portfolio.model.ProfileResponse;
 import com.api.rest.portfolio.model.RoleResponse;
+import com.api.rest.portfolio.model.ServiceResponse;
 import com.api.rest.portfolio.model.SkillResponse;
 import com.api.rest.portfolio.model.UserResponse;
 
@@ -56,5 +58,26 @@ public class ResponseMapper {
                                 p.getImageUrl(),
                                 p.getIsPublished()
                             )).collect(Collectors.toList());
+    }
+
+    public static ServiceResponse ToServiceResponseMapper(ServiceEntity service) {
+        return ServiceResponse.builder()
+                .name(service.getName())
+                .imageUrl(service.getImageUrl())
+                .description(service.getDescription())
+                .isPublished(service.getIsPublished())
+                .build();
+    }
+
+    public static List<ServiceResponse> ToServiceResponseListMapper(List<ServiceEntity> services) {
+        return services.stream()
+                            .map(
+                                p -> new ServiceResponse(
+                                    p.getId(),
+                                    p.getName(),
+                                    p.getImageUrl(),
+                                    p.getDescription(),
+                                    p.getIsPublished()
+                                )).collect(Collectors.toList());
     }
 }
