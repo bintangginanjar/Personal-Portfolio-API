@@ -7,11 +7,13 @@ import com.api.rest.portfolio.entity.ProfileEntity;
 import com.api.rest.portfolio.entity.RoleEntity;
 import com.api.rest.portfolio.entity.ServiceEntity;
 import com.api.rest.portfolio.entity.SkillEntity;
+import com.api.rest.portfolio.entity.SocialAccountEntity;
 import com.api.rest.portfolio.entity.UserEntity;
 import com.api.rest.portfolio.model.ProfileResponse;
 import com.api.rest.portfolio.model.RoleResponse;
 import com.api.rest.portfolio.model.ServiceResponse;
 import com.api.rest.portfolio.model.SkillResponse;
+import com.api.rest.portfolio.model.SocialAccountResponse;
 import com.api.rest.portfolio.model.UserResponse;
 
 public class ResponseMapper {
@@ -80,5 +82,26 @@ public class ResponseMapper {
                                     p.getDescription(),
                                     p.getIsPublished()
                                 )).collect(Collectors.toList());
+    }
+
+    public static SocialAccountResponse ToSocialAccountResponseMapper(SocialAccountEntity social) {
+        return SocialAccountResponse.builder()
+                                    .id(social.getId())
+                                    .name(social.getName())
+                                    .url(social.getUrl())
+                                    .imageUrl(social.getImageUrl())
+                                    .build();
+    }
+
+    public static List<SocialAccountResponse> ToSocialAccountResponseListMapper(List<SocialAccountEntity> socials) {
+        return socials.stream()
+                        .map(
+                            p -> new SocialAccountResponse(
+                                p.getId(),
+                                p.getName(),
+                                p.getUrl(),
+                                p.getImageUrl(),
+                                p.getIsPublished()
+                            )).collect(Collectors.toList());
     }
 }

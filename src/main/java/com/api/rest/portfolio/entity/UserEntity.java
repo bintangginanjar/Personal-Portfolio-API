@@ -37,8 +37,7 @@ public class UserEntity {
     private Integer id;
     
     private String username;
-    private String password;
-    private String name;
+    private String password;    
     private String token;
 
     @Column(name = "token_expired_at")
