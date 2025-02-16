@@ -70,7 +70,7 @@ public class SkillControllerTest {
 
     private final String name = "coding";
     private final String imageUrl = "https://cdn-icons-png.flaticon.com/512/4191/4191039.png";
-    private final boolean published = true;
+    private final Boolean published = true;
 
     @BeforeEach
     void setUp() {                
