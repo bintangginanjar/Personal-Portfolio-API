@@ -19,7 +19,6 @@ public class RegisterProjectRequest {
     @NotBlank
     private String imageUrl;
 
-    @NotBlank
     private String url;
 
     @NotBlank
