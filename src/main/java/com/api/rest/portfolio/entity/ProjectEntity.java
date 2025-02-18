@@ -61,6 +61,6 @@ public class ProjectEntity {
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "projectEntity", cascade = CascadeType.ALL)
-    private List<ProjectImageEntity> projectImages;
+    private List<ImageEntity> projectImages;
 
 }

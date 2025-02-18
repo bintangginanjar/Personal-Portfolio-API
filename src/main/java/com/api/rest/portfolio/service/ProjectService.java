@@ -158,7 +158,7 @@ public class ProjectService {
         try {
             projectRepository.delete(project);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Project skill failed");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Project delete failed");
         }
     }
 }
