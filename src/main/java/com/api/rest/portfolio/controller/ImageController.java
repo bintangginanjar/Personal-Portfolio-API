@@ -54,8 +54,7 @@ public class ImageController {
         path = "/api/users/projects/{projectId}/image/{imageId}",        
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<ImageResponse> get(Authentication authentication, 
-                                            @RequestBody RegisterImageRequest request,
+    public WebResponse<ImageResponse> get(Authentication authentication,                                             
                                             @PathVariable("projectId") String projectId,
                                             @PathVariable("imageId") String imageId) {
 
@@ -109,8 +108,7 @@ public class ImageController {
         path = "/api/users/projects/{projectId}/image/{imageId}",
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<String> delete(Authentication authentication, 
-                                            @RequestBody RegisterImageRequest request,
+    public WebResponse<String> delete(Authentication authentication,                                            
                                             @PathVariable("projectId") String projectId,
                                             @PathVariable("imageId") String imageId) {
 

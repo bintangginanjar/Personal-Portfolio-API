@@ -15,4 +15,6 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Integer>
 
     List<ProjectEntity> findAllByUserEntity(UserEntity userEntity);
 
+    Optional<ProjectEntity> findFirstByName(String projectName);
+
 }
