@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.api.rest.portfolio.entity.ProfileEntity;
+import com.api.rest.portfolio.entity.ProjectEntity;
 import com.api.rest.portfolio.entity.RoleEntity;
 import com.api.rest.portfolio.entity.ServiceEntity;
 import com.api.rest.portfolio.entity.SkillEntity;
 import com.api.rest.portfolio.entity.SocialAccountEntity;
 import com.api.rest.portfolio.entity.UserEntity;
 import com.api.rest.portfolio.model.ProfileResponse;
+import com.api.rest.portfolio.model.ProjectResponse;
 import com.api.rest.portfolio.model.RoleResponse;
 import com.api.rest.portfolio.model.ServiceResponse;
 import com.api.rest.portfolio.model.SkillResponse;
@@ -103,5 +105,32 @@ public class ResponseMapper {
                                 p.getImageUrl(),
                                 p.getIsPublished()
                             )).collect(Collectors.toList());
+    }
+
+    public static ProjectResponse ToProjectResponseMapper(ProjectEntity project) {
+        return ProjectResponse.builder()
+                                .id(project.getId())
+                                .name(project.getName())
+                                .imageUrl(project.getImageUrl())
+                                .url(project.getUrl())
+                                .description(project.getDescription())
+                                .hashtag(project.getHashtag())
+                                .isPublished(project.getIsPublished())
+                                .isOpen(project.getIsOpen())
+                                .build();
+    }
+
+    public static List<ProjectResponse> ToProjectResponseListMapper(List<ProjectEntity> projects) {
+        return projects.stream()
+                        .map(p -> new ProjectResponse(
+                                p.getId(),
+                                p.getName(),
+                                p.getImageUrl(),
+                                p.getUrl(),
+                                p.getDescription(),
+                                p.getHashtag(),
+                                p.getIsPublished(),
+                                p.getIsOpen()
+                        )).collect(Collectors.toList());
     }
 }

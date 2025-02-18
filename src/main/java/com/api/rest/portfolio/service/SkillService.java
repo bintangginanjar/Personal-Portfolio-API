@@ -46,7 +46,7 @@ public class SkillService {
         validationService.validate(request);            
 
         UserEntity user = userRepository.findByUsername(authentication.getName())
-                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));                    
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         SkillEntity skill = new SkillEntity();
         skill.setName(request.getName());
