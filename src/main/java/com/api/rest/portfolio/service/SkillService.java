@@ -82,11 +82,16 @@ public class SkillService {
     }    
 
     @Transactional
-    public List<SkillResponse> list(Authentication authentication) {
+    //public List<SkillResponse> list(Authentication authentication) {
+    public List<SkillResponse> list() {
+        /*
         UserEntity user = userRepository.findByUsername(authentication.getName())
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         List<SkillEntity> skills = skillRepository.findAllByUserEntity(user);
+        */
+
+        List<SkillEntity> skills = skillRepository.findAll();
 
         return ResponseMapper.ToSkillResponseListMapper(skills);
     }

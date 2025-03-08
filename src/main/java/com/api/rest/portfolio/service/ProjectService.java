@@ -81,11 +81,16 @@ public class ProjectService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProjectResponse> list(Authentication authentication) {
+    //public List<ProjectResponse> list(Authentication authentication) {
+    public List<ProjectResponse> list() {
+        /*
         UserEntity user = userRepository.findByUsername(authentication.getName())
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         List<ProjectEntity> projects = projectRepository.findAllByUserEntity(user);
+        */
+
+        List<ProjectEntity> projects = projectRepository.findAll();
 
         return ResponseMapper.ToProjectResponseListMapper(projects);
     }

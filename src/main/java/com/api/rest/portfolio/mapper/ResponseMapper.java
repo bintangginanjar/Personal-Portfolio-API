@@ -18,9 +18,20 @@ import com.api.rest.portfolio.model.RoleResponse;
 import com.api.rest.portfolio.model.ServiceResponse;
 import com.api.rest.portfolio.model.SkillResponse;
 import com.api.rest.portfolio.model.SocialAccountResponse;
+import com.api.rest.portfolio.model.TokenResponse;
 import com.api.rest.portfolio.model.UserResponse;
 
 public class ResponseMapper {
+
+    public static TokenResponse ToTokenResponseMapper(UserEntity user, String token, List<String> roles) {
+        return TokenResponse.builder()
+                .username(user.getUsername())
+                .token(token)
+                .roles(roles)
+                .build();
+
+    }
+
     public static UserResponse ToUserResponseMapper(UserEntity user) {        
         List<String> roles = user.getRoles().stream().map(p -> p.getName()).toList();
 

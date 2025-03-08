@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.api.rest.portfolio.entity.UserEntity;
+import com.api.rest.portfolio.mapper.ResponseMapper;
 import com.api.rest.portfolio.model.LoginUserRequest;
 import com.api.rest.portfolio.model.TokenResponse;
 import com.api.rest.portfolio.repository.UserRepository;
@@ -76,7 +77,8 @@ public class AuthService {
             user.setTokenExpiredAt(System.currentTimeMillis() + SecurityConstants.JWTexpiration);
             userRepository.save(user);
 
-            return TokenResponse.builder().token(token).roles(roles).build();
+            //return TokenResponse.builder().token(token).roles(roles).build();
+            return ResponseMapper.ToTokenResponseMapper(user, token, roles);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong username or password");
         }        

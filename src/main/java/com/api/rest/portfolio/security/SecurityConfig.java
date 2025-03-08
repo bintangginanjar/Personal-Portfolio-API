@@ -33,6 +33,8 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                     //.requestMatchers("/api/users/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/projects").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/skills").permitAll()
                     .anyRequest()
                     .authenticated())            
             .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -42,6 +44,18 @@ public class SecurityConfig {
         return http.build();
     }
     
+    /*
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    */
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

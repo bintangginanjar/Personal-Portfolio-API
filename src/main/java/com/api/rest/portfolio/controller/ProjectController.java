@@ -32,7 +32,7 @@ public class ProjectController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(
-        path = "/api/users/projects",        
+        path = "/api/projects",        
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -50,7 +50,7 @@ public class ProjectController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(
-        path = "/api/users/projects/{projectId}",                
+        path = "/api/projects/{projectId}",                
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<ProjectResponse> register(Authentication authentication, 
@@ -65,14 +65,16 @@ public class ProjectController {
                                         .build();      
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(
-        path = "/api/users/project/list",                
+        path = "/api/projects",                
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<List<ProjectResponse>> get(Authentication authentication) {
+    //public WebResponse<List<ProjectResponse>> get(Authentication authentication) {
+        public WebResponse<List<ProjectResponse>> get() {
 
-        List<ProjectResponse> response = projectService.list(authentication);
+        //List<ProjectResponse> response = projectService.list(authentication);
+        List<ProjectResponse> response = projectService.list();
 
         return WebResponse.<List<ProjectResponse>>builder()
                                         .status(true)
@@ -83,7 +85,7 @@ public class ProjectController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping(
-        path = "/api/users/projects/{projectId}",        
+        path = "/api/projects/{projectId}",        
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -104,7 +106,7 @@ public class ProjectController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(
-        path = "/api/users/projects/{projectId}",                
+        path = "/api/projects/{projectId}",                
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<String> delete(Authentication authentication, 

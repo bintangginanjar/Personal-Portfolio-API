@@ -100,13 +100,14 @@ public class SkillController {
                                         .build();      
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(
-        path = "/api/users/skills/list",        
+        path = "/api/skills",
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<List<SkillResponse>> list(Authentication authentication) {
-        List<SkillResponse> response = skillService.list(authentication);
+    public WebResponse<List<SkillResponse>> list() {
+        //List<SkillResponse> response = skillService.list(authentication);
+        List<SkillResponse> response = skillService.list();
 
         return WebResponse.<List<SkillResponse>>builder()
                                         .status(true)

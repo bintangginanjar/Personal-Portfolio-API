@@ -6,5 +6,6 @@ public class SecurityConstants {
 
     public static final String JWTsecret = "Th3k0p4tspringboot";
 
+    public static final String FrontEndUrl = "http://localhost:5173/";
 }
 
